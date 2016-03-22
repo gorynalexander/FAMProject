@@ -5,6 +5,12 @@ public class Sights {
     private String title;
     private int img;
 
+    public Sights(int id, String title, int img) {
+        this.id = id;
+        this.title = title;
+        this.img = img;
+    }
+
     public int getId() {
         return id;
     }
@@ -18,12 +24,6 @@ public class Sights {
     }
 
     public void setImg(int img) {
-        this.img = img;
-    }
-
-    public Sights(int id, String title, int img) {
-        this.id = id;
-        this.title = title;
         this.img = img;
     }
 
