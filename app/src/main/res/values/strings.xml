@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Find and Mark Beta</string>
+    <string name="sights">Sights </string>
+    <string name="add_new">Add new sight </string>
+    <string name="achieve">Achievements </string>
+    <string name="sett">Settings </string>
+    <string name="change_acc">Change account</string>
+    <string name="info">About </string>
+    <string name="share">Share with friends </string>
+    <string name="nav_open">Open</string>
+    <string name="nav_close">Close</string>
+    <string name="tab_items_exist">Exist Sights</string>
+    <string name="tab_items_passed">Passed Places</string>
+    <string name="check_btn">Check!</string>
+
+</resources>

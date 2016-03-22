@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_sights"
+        android:orderInCategory="1"
+        android:title="@string/sights"
+        android:icon="@drawable/ic_insert_photo_black_18dp"/>
+
+    <item
+        android:orderInCategory="1"
+        android:title="@string/add_new"
+        android:icon="@drawable/ic_plus_one_black_18dp"
+     />
+    <item
+        android:orderInCategory="1"
+        android:title="@string/achieve"
+        android:icon="@drawable/ic_stars_black_18dp"/>
+    <item
+        android:orderInCategory="1"
+        android:title="@string/sett"
+        android:icon="@drawable/ic_settings_applications_black_18dp"/>
+    <item
+        android:orderInCategory="1"
+        android:title="@string/change_acc"
+        android:icon="@drawable/ic_exit_to_app_black_18dp"/>
+    <item
+        android:orderInCategory="1"
+        android:title="@string/info"
+        android:icon="@drawable/ic_info_black_18dp"/>
+    <item
+        android:orderInCategory="1"
+        android:title="@string/share"
+        android:icon="@drawable/ic_share_black_18dp"/>
+</menu>
