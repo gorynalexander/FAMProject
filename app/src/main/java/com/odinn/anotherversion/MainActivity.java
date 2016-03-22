@@ -1,11 +1,10 @@
 package com.odinn.anotherversion;
 
-import android.content.Context;
-import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -17,7 +16,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -28,11 +26,10 @@ import com.odinn.anotherversion.adapter.SightListAdapter;
 import com.odinn.anotherversion.adapter.TabsPagerFragmentAdapter;
 
 
-
 public class MainActivity extends AppCompatActivity implements
-    GoogleApiClient.ConnectionCallbacks,
-    GoogleApiClient.OnConnectionFailedListener,
-    com.google.android.gms.location.LocationListener{
+        GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener,
+        com.google.android.gms.location.LocationListener {
 
     private static final int LAYOUT = R.layout.activity_main;
 
@@ -51,9 +48,6 @@ public class MainActivity extends AppCompatActivity implements
     private GoogleApiClient apiClient;
     private LatLng myLatLng;
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppDefault);
@@ -64,14 +58,11 @@ public class MainActivity extends AppCompatActivity implements
         initNavigationView();
         initTabs();
 
-
         googleApiConnect();
-
-
     }
 
     private void googleApiConnect() {
-        if (GooglePlayServicesUtil.isGooglePlayServicesAvailable(this) == ConnectionResult.SUCCESS){
+        if (GooglePlayServicesUtil.isGooglePlayServicesAvailable(this) == ConnectionResult.SUCCESS) {
             apiClient = new GoogleApiClient.Builder(this)
                     .addApi(LocationServices.API)
                     .addConnectionCallbacks(this)
@@ -79,8 +70,7 @@ public class MainActivity extends AppCompatActivity implements
                     .build();
             apiClient.connect();
 
-        }
-        else Toast.makeText(this,"Google Play Services error.", Toast.LENGTH_SHORT ).show();
+        } else Toast.makeText(this, "Google Play Services error.", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -91,15 +81,15 @@ public class MainActivity extends AppCompatActivity implements
         mLocationRequest.setFastestInterval(2500);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         apiClient.connect();
-     //   handleNewLocation(myLocation);
+        //   handleNewLocation(myLocation);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        if(apiClient.isConnected()) {
+        if (apiClient.isConnected()) {
             LocationServices.FusedLocationApi.removeLocationUpdates(
-                    apiClient,  this);
+                    apiClient, this);
             apiClient.disconnect();
         }
     }
@@ -107,10 +97,10 @@ public class MainActivity extends AppCompatActivity implements
     public LatLng handleNewLocation(Location myLocation) {
         try {
             myLatLng = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
-            Toast.makeText(this,"" + myLatLng.toString(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "" + myLatLng.toString(), Toast.LENGTH_SHORT).show();
 
-        } catch (NullPointerException e){
-            Toast.makeText(this,"Null" + myLatLng.toString(), Toast.LENGTH_SHORT).show();
+        } catch (NullPointerException e) {
+            Toast.makeText(this, "Null" + myLatLng.toString(), Toast.LENGTH_SHORT).show();
         }
         return myLatLng;
 
@@ -121,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements
 
 
         viewPager = (ViewPager) findViewById(R.id.viewPager);
-        TabLayout  tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
 
         TabsPagerFragmentAdapter adapter = new TabsPagerFragmentAdapter(this, getSupportFragmentManager());
         viewPager.setAdapter(adapter);
@@ -132,7 +122,6 @@ public class MainActivity extends AppCompatActivity implements
     private void initToolbar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.app_name);
-
 
 
     }
@@ -163,24 +152,23 @@ public class MainActivity extends AppCompatActivity implements
 
     }
 
-    private void showNotificationTab(){
+    private void showNotificationTab() {
         viewPager.setCurrentItem(TAB_ONE);
     }
-    public void savePref (double lat, double lng){
-    //    getPre
-        SightListAdapter sla = new SightListAdapter(this);
-        SharedPreferences sharedPreferences = getSharedPreferences("GPSData", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("lat", "" + lat);
-        editor.putString("lng", "" + lng);
 
-        editor.commit();
+    public void savePref(double lat, double lng) {
+        SightListAdapter sla = new SightListAdapter(null);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        sharedPreferences.edit()
+                .putString(Constants.PREF_LATITUDE, "" + lat)
+                .putString(Constants.PREF_LONGITUDE, "" + lng)
+                .apply();
     }
 
     @Override
     public void onConnected(Bundle bundle) { // gps connect
         myLocation = LocationServices.FusedLocationApi.getLastLocation(apiClient);
-        if (myLocation != null){
+        if (myLocation != null) {
             handleNewLocation(myLocation);
 
         }
@@ -189,14 +177,14 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onConnectionSuspended(int i) {
-        Toast.makeText(getApplicationContext(), "Connection suspended", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Connection suspended", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onLocationChanged(Location location) {
         handleNewLocation(myLocation); // updating new location when it changed
-        Toast.makeText(getApplicationContext(), myLatLng.toString() , Toast.LENGTH_SHORT).show();
-       // savePref(myLocation.getLatitude(), myLocation.getLongitude());
+        Toast.makeText(this, myLatLng.toString(), Toast.LENGTH_SHORT).show();
+        // savePref(myLocation.getLatitude(), myLocation.getLongitude());
     }
 
     @Override
@@ -210,7 +198,7 @@ public class MainActivity extends AppCompatActivity implements
             }
         } else {
             Log.i("COORDINATE", "Location services connection failed with code " + connectionResult.getErrorCode());
-            Toast.makeText(getApplicationContext(), "Connection failed with code " + connectionResult.getErrorCode(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Connection failed with code " + connectionResult.getErrorCode(), Toast.LENGTH_SHORT).show();
         }
     }
 }

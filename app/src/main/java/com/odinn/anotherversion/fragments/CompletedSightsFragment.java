@@ -10,33 +10,23 @@ import android.view.ViewGroup;
 import com.odinn.anotherversion.R;
 
 
-public class CompletedSights extends AbstractTabFragment {
+public class CompletedSightsFragment extends AbstractTabFragment {
 
-    private static int LAYOUT = R.layout.fragment_exist;
-
-
-    public static CompletedSights getInstance(Context context) {
-
-        Bundle args = new Bundle();
-        CompletedSights fragment = new CompletedSights();
+    public static CompletedSightsFragment getInstance(@Nullable Bundle args) {
+        if (args == null) {
+            args = new Bundle();
+        }
+        CompletedSightsFragment fragment = new CompletedSightsFragment();
         fragment.setArguments(args);
-        fragment.setContext(context);
+
+        Context context = fragment.getActivity();
         fragment.setTitle(context.getString(R.string.tab_items_passed));
         return fragment;
-
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(LAYOUT, container, false);
-
-
-        return view;
-    }
-
-
-    public void setContext(Context context) {
-        this.context = context;
+        return inflater.inflate(R.layout.fragment_exist, container, false);
     }
 }

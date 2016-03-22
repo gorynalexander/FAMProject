@@ -1,13 +1,9 @@
-package com.odinn.anotherversion.dto;
+package com.odinn.anotherversion.models;
 
-
-
-
-public class SightsDTO {
+public class Sights {
     private int id;
     private String title;
     private int img;
-
 
     public int getId() {
         return id;
@@ -25,7 +21,7 @@ public class SightsDTO {
         this.img = img;
     }
 
-    public SightsDTO(int id, String title, int img) {
+    public Sights(int id, String title, int img) {
         this.id = id;
         this.title = title;
         this.img = img;

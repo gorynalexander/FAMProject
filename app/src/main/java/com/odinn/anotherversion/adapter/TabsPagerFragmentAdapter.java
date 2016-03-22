@@ -8,8 +8,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.odinn.anotherversion.R;
 import com.odinn.anotherversion.fragments.AbstractTabFragment;
-import com.odinn.anotherversion.fragments.CompletedSights;
-import com.odinn.anotherversion.fragments.ExistSights;
+import com.odinn.anotherversion.fragments.CompletedSightsFragment;
+import com.odinn.anotherversion.fragments.ExistSightsFragment;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,8 +23,8 @@ public class TabsPagerFragmentAdapter extends FragmentPagerAdapter{
         super(fm);
         this.context = context;
         tabs = new HashMap<>();
-        tabs.put(0, ExistSights.getInstance(context));
-        tabs.put(1, CompletedSights.getInstance(context));
+        tabs.put(0, ExistSightsFragment.getInstance(context));
+        tabs.put(1, CompletedSightsFragment.getInstance(context));
     }
 
     @Override
