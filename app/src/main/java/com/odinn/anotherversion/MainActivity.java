@@ -113,11 +113,10 @@ public class MainActivity extends AppCompatActivity implements
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
 
-        TabsPagerFragmentAdapter adapter = new TabsPagerFragmentAdapter(this, getSupportFragmentManager());
+        TabsPagerFragmentAdapter adapter = new TabsPagerFragmentAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
     }
-
 
     private void initToolbar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);

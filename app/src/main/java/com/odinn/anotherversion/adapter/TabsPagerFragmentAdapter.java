@@ -1,30 +1,24 @@
 package com.odinn.anotherversion.adapter;
 
 
-import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.odinn.anotherversion.R;
 import com.odinn.anotherversion.fragments.AbstractTabFragment;
 import com.odinn.anotherversion.fragments.CompletedSightsFragment;
 import com.odinn.anotherversion.fragments.ExistSightsFragment;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
 
 public class TabsPagerFragmentAdapter extends FragmentPagerAdapter{
 
-    private Map<Integer, AbstractTabFragment> tabs;
-    private Context context;
+    private ArrayList<AbstractTabFragment> tabs = new ArrayList<>();
 
-    public TabsPagerFragmentAdapter(Context context, FragmentManager fm ) {
+    public TabsPagerFragmentAdapter(FragmentManager fm ) {
         super(fm);
-        this.context = context;
-        tabs = new HashMap<>();
-        tabs.put(0, ExistSightsFragment.getInstance(context));
-        tabs.put(1, CompletedSightsFragment.getInstance(context));
+        tabs.add(ExistSightsFragment.getInstance(null));
+        tabs.add(CompletedSightsFragment.getInstance(null));
     }
 
     @Override
@@ -34,7 +28,6 @@ public class TabsPagerFragmentAdapter extends FragmentPagerAdapter{
 
     @Override
     public CharSequence getPageTitle(int position) {
-
         return tabs.get(position).getTitle();
     }
 
