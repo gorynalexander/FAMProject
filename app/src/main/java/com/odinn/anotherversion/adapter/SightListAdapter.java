@@ -3,7 +3,6 @@ package com.odinn.anotherversion.adapter;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -66,17 +65,17 @@ public class SightListAdapter extends RecyclerView.Adapter<SightListAdapter.Sigh
     }
 
     public static class SightListHolder extends RecyclerView.ViewHolder {
-        CardView cardView;
+//        CardView cardView;
         TextView title;
         ImageView img;
         Button button;
 
         public SightListHolder(View itemView) {
             super(itemView);
-            cardView = (CardView) itemView.findViewById(R.id.cardView);
+//            cardView = (CardView) itemView.findViewById(R.id.cardView);
             title = (TextView) itemView.findViewById(R.id.title);
-            img = (ImageView) itemView.findViewById(R.id.imageView);
-            button = (Button) itemView.findViewById(R.id.check_btn);
+            img = (ImageView) itemView.findViewById(R.id.ivSightPhoto);
+            button = (Button) itemView.findViewById(R.id.btnCheck);
 
         }
     }

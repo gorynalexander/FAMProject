@@ -24,17 +24,19 @@ public class ExistSightsFragment extends AbstractTabFragment {
         }
         ExistSightsFragment fragment = new ExistSightsFragment();
         fragment.setArguments(args);
-        fragment.setTitle(fragment.getActivity().getString(R.string.tab_items_exist));
         return fragment;
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        this.setTitle(getActivity().getString(R.string.tab_items_exist));
+
         view = inflater.inflate(R.layout.fragment_exist, container, false);
-        RecyclerView rv = (RecyclerView) view.findViewById(R.id.recycleView);
+        RecyclerView rv = (RecyclerView) view.findViewById(R.id.rvSightsList);
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));
         rv.setAdapter(new SightListAdapter(createMockSightListData()));
+
         return view;
     }
 

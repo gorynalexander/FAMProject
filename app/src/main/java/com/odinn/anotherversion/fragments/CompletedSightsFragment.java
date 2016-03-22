@@ -1,6 +1,5 @@
 package com.odinn.anotherversion.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -18,15 +17,13 @@ public class CompletedSightsFragment extends AbstractTabFragment {
         }
         CompletedSightsFragment fragment = new CompletedSightsFragment();
         fragment.setArguments(args);
-
-        Context context = fragment.getActivity();
-        fragment.setTitle(context.getString(R.string.tab_items_passed));
         return fragment;
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        this.setTitle(getActivity().getString(R.string.tab_items_passed));
         return inflater.inflate(R.layout.fragment_exist, container, false);
     }
 }

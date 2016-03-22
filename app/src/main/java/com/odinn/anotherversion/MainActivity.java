@@ -122,8 +122,6 @@ public class MainActivity extends AppCompatActivity implements
     private void initToolbar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.app_name);
-
-
     }
 
     private void initNavigationView() {
@@ -170,7 +168,6 @@ public class MainActivity extends AppCompatActivity implements
         myLocation = LocationServices.FusedLocationApi.getLastLocation(apiClient);
         if (myLocation != null) {
             handleNewLocation(myLocation);
-
         }
         LocationServices.FusedLocationApi.requestLocationUpdates(apiClient, mLocationRequest, this);
     }
