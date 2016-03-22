@@ -3,7 +3,7 @@ package com.odinn.anotherversion.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.odinn.anotherversion.fragments.AbstractTabFragment;
 import com.odinn.anotherversion.fragments.CompletedSightsFragment;
@@ -11,7 +11,7 @@ import com.odinn.anotherversion.fragments.ExistSightsFragment;
 
 import java.util.ArrayList;
 
-public class TabsPagerFragmentAdapter extends FragmentPagerAdapter{
+public class TabsPagerFragmentAdapter extends FragmentStatePagerAdapter{
 
     private ArrayList<AbstractTabFragment> tabs = new ArrayList<>();
 
