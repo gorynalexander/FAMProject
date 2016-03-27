@@ -5,7 +5,28 @@ public class Sights {
     private String title;
     private int img;
 
-    public Sights(int id, String title, int img) {
+
+
+    private double lat;
+    private double lng;
+
+    public double getLng() {
+        return lng;
+    }
+
+    public void setLng(double lng) {
+        this.lng = lng;
+    }
+
+    public Sights(int id, String title, int img, double lat, double lng) {
+        this.id = id;
+        this.title = title;
+        this.img = img;
+        this.lat = lat;
+        this.lng = lng;
+    }
+
+    public Sights(int id, String title, int img ) {
         this.id = id;
         this.title = title;
         this.img = img;
@@ -29,6 +50,14 @@ public class Sights {
 
     public String getTitle() {
         return title;
+    }
+
+    public double getLat() {
+        return lat;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
     }
 
     public void setTitle(String title) {

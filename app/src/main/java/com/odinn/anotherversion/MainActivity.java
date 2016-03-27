@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements
     public LatLng handleNewLocation(Location myLocation) {
         try {
             myLatLng = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
-            Toast.makeText(this, "" + myLatLng.toString(), Toast.LENGTH_SHORT).show();
+       //     Toast.makeText(this, "" + myLatLng.toString(), Toast.LENGTH_SHORT).show();
 
         } catch (NullPointerException e) {
             Toast.makeText(this, "Null" + myLatLng.toString(), Toast.LENGTH_SHORT).show();
@@ -179,8 +179,8 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onLocationChanged(Location location) {
         handleNewLocation(myLocation); // updating new location when it changed
-        Toast.makeText(this, myLatLng.toString(), Toast.LENGTH_SHORT).show();
-        // savePref(myLocation.getLatitude(), myLocation.getLongitude());
+     //   Toast.makeText(this, myLatLng.toString(), Toast.LENGTH_SHORT).show();
+         savePref(myLocation.getLatitude(), myLocation.getLongitude());
     }
 
     @Override

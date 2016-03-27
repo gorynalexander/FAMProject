@@ -23,6 +23,8 @@ public class SightListAdapter extends RecyclerView.Adapter<SightListAdapter.Sigh
 
     private List<Sights> sightsList;
 
+    private Sights s;
+
     public SightListAdapter(List<Sights> sightsList) {
         this.sightsList = sightsList;
     }
@@ -33,27 +35,46 @@ public class SightListAdapter extends RecyclerView.Adapter<SightListAdapter.Sigh
         return new SightListHolder(view);
     }
 
-    public void load() {
-
-    }
 
     @Override
     public void onBindViewHolder(final SightListHolder holder, final int position) {
+       final  double lat;
+       final  double lng;
         Sights item = sightsList.get(position);
+        //s = sightsList.get(position);
         holder.title.setText(item.getTitle());
         holder.img.setImageResource(item.getImg());
+        lat = item.getLat();
+        lng = item.getLng();
+
+
 
         holder.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(view.getContext());
-                String latitude = sharedPreferences.getString(Constants.PREF_LATITUDE, null);
-                if (TextUtils.isEmpty(latitude)) {
+                double curLatitude = Double.parseDouble(sharedPreferences.getString(Constants.PREF_LATITUDE, null));
+                double curLongitude = Double.parseDouble(sharedPreferences.getString(Constants.PREF_LONGITUDE, null));
+
+              //  Toast.makeText(view.getContext(),""+ curLatitude + " "+ lat, Toast.LENGTH_SHORT).show();
+                if (curLatitude == 0 && curLongitude == 0) {
                     Toast.makeText(view.getContext(), "-", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(view.getContext(), latitude, Toast.LENGTH_SHORT).show();
+                    if (curLatitude <= lat + 0.0002 &&
+                            curLongitude <= lng + 0.0003 &&
+                            curLatitude >= lat - 0.0002 &&
+                            curLongitude >= lng - 0.0003){
+
+                        Toast.makeText(view.getContext(),""+ curLatitude + " "+ lat + " DONE", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(view.getContext(),""+ curLatitude + " "+ lat + " NO", Toast.LENGTH_SHORT).show();
+                    }
+                   // Toast.makeText(view.getContext(),""+ curLatitude + " "+ lat, Toast.LENGTH_SHORT).show();
                 }
+
             } // чек геодаты если true то убрать карточку в 2 таб
+
         });
 
 
@@ -65,17 +86,19 @@ public class SightListAdapter extends RecyclerView.Adapter<SightListAdapter.Sigh
     }
 
     public static class SightListHolder extends RecyclerView.ViewHolder {
-//        CardView cardView;
         TextView title;
         ImageView img;
         Button button;
+        String kek;
+
 
         public SightListHolder(View itemView) {
             super(itemView);
-//            cardView = (CardView) itemView.findViewById(R.id.cardView);
+
             title = (TextView) itemView.findViewById(R.id.title);
             img = (ImageView) itemView.findViewById(R.id.ivSightPhoto);
             button = (Button) itemView.findViewById(R.id.btnCheck);
+
 
         }
     }
