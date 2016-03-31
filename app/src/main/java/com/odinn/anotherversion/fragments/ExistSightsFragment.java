@@ -43,9 +43,9 @@ public class ExistSightsFragment extends AbstractTabFragment {
     private List<Sights> createMockSightListData() {
         List<Sights> data = new ArrayList<>();
        // data.add(new Sights(0, "Item 1", R.drawable.opera, 46.581422, 30.808210));
-        data.add(new Sights(0, "Item 1", R.drawable.opera, 46.581422, 30.808210));
-        data.add(new Sights(1, "Item 2", R.drawable.fontan, 46.583816 , 30.778767));
-        data.add(new Sights(2, "Item 3", R.drawable.krijanovka, 2, 2));
+        data.add(new Sights(0, "Theatre", R.drawable.opera, 46.581422, 30.808210));
+        data.add(new Sights(1, "Boulevar on p. Kotovskogo", R.drawable.fontan, 46.583816 , 30.778767));
+        data.add(new Sights(2, "Krijanovka", R.drawable.krijanovka, 2, 2));
         return data;
     }
 

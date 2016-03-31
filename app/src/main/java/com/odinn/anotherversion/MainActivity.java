@@ -1,5 +1,6 @@
 package com.odinn.anotherversion;
 
+import android.content.DialogInterface;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.location.Location;
@@ -10,6 +11,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -34,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements
     private static final int LAYOUT = R.layout.activity_main;
 
     public static final int TAB_ONE = 0;
-    public static final int TAB_TWO = 1;
+
 
     private SharedPreferences mySharedPr;
 
@@ -139,15 +141,50 @@ public class MainActivity extends AppCompatActivity implements
                     case R.id.nav_sights:
                         showNotificationTab();
                         break;
+                    case R.id.nav_add_new:
+                        makeAlert("SORRY", "It will be working soon");
+                        break;
+                    case R.id.nav_achieve:
+                        makeAlert("SORRY", "It will be working soon");
+                        break;
+                    case R.id.nav_set:
+                        makeAlert("SORRY", "It will be working soon");
+                        break;
+                    case R.id.nav_change_acc:
+                        makeAlert("SORRY", "It will be working soon");
+                        break;
+                    case R.id.nav_about:
+                        makeAlert("Find&Mark", "Developer : Alexander Goryn");
+                        break;
+                    case R.id.nav_share:
+                        makeAlert("SORRY", "It will be working soon");
+                        break;
 
                 }
 
                 return true;
             }
+
+            private void makeAlert(String title, String message) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle(title)
+                        .setMessage(message)
+                        .setCancelable(false)
+                        .setNegativeButton("OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+
+                                });
+                AlertDialog alert = builder.create();
+                alert.show();
+            }
+
+
         });
-
-
     }
+
 
     private void showNotificationTab() {
         viewPager.setCurrentItem(TAB_ONE);
