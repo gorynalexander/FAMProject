@@ -22,6 +22,10 @@
 
         </activity>
 
+        <activity android:name=".FullScreenActivity"
+                  android:label="FullScreen">
+        </activity>
+
     </application>
 
 </manifest>

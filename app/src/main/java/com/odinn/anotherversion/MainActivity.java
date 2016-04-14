@@ -24,7 +24,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
-import com.odinn.anotherversion.adapter.SightListAdapter;
 import com.odinn.anotherversion.adapter.TabsPagerFragmentAdapter;
 
 
@@ -191,7 +190,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     public void savePref(double lat, double lng) {
-        SightListAdapter sla = new SightListAdapter(null);
+        //SightListAdapter sla = new SightListAdapter(null);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         sharedPreferences.edit()
                 .putString(Constants.PREF_LATITUDE, "" + lat)
