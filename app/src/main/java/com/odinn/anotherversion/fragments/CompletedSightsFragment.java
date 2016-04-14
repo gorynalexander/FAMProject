@@ -16,7 +16,7 @@ import com.odinn.anotherversion.models.Sights;
 import java.util.ArrayList;
 import java.util.List;
 
-
+//
 public class CompletedSightsFragment extends AbstractTabFragment {
 
     public static CompletedSightsFragment getInstance(@Nullable Bundle args) {
