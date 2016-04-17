@@ -2,21 +2,28 @@ package com.odinn.anotherversion.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.internal.NavigationMenuPresenter;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.odinn.anotherversion.MainActivity;
+import com.odinn.anotherversion.OnSightMovedListener;
 import com.odinn.anotherversion.R;
 import com.odinn.anotherversion.adapter.SightListAdapter;
+import com.odinn.anotherversion.adapter.TabsPagerFragmentAdapter;
 import com.odinn.anotherversion.models.Sights;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class ExistSightsFragment extends AbstractTabFragment {
+public class ExistSightsFragment extends AbstractTabFragment implements OnSightMovedListener {
+
+    private RecyclerView rvSightsList;
 
     public static ExistSightsFragment getInstance(@Nullable Bundle args) {
         if (args == null) {
@@ -34,9 +41,16 @@ public class ExistSightsFragment extends AbstractTabFragment {
         this.setTitle(getActivity().getString(R.string.tab_items_exist));
 
         view = inflater.inflate(R.layout.fragment_exist, container, false);
-        RecyclerView rv = (RecyclerView) view.findViewById(R.id.rvSightsList);
-        rv.setLayoutManager(new LinearLayoutManager(getActivity()));
-        rv.setAdapter(new SightListAdapter(createMockSightListData()));
+        rvSightsList = (RecyclerView) view.findViewById(R.id.rvSightsList);
+        rvSightsList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        SightListAdapter adapter = new SightListAdapter(createMockSightListData());
+        try{
+            MainActivity activity = (MainActivity) getActivity();
+            adapter.setListener(activity.getAdapter().getCompletedItemsFragment());
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        rvSightsList.setAdapter(adapter);
 
         return view;
     }
@@ -49,4 +63,8 @@ public class ExistSightsFragment extends AbstractTabFragment {
         return data;
     }
 
+    @Override
+    public void onSightMoved(Sights sights) {
+        ((SightListAdapter) rvSightsList.getAdapter()).add(sights);
+    }
 }

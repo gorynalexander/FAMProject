@@ -1,13 +1,17 @@
 package com.odinn.anotherversion;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -35,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements
     private static final int LAYOUT = R.layout.activity_main;
 
     public static final int TAB_ONE = 0;
+    public static final int RC_LOCATION_PERM = 0;
 
 
     private SharedPreferences mySharedPr;
@@ -48,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements
     private LocationRequest mLocationRequest;
     private GoogleApiClient apiClient;
     private LatLng myLatLng;
+    private TabsPagerFragmentAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,11 +69,10 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void googleApiConnect() {
-        if (GooglePlayServicesUtil.isGooglePlayServicesAvailable(this) == ConnectionResult.SUCCESS) {
-            apiClient = new GoogleApiClient.Builder(this)
+        if (GooglePlayServicesUtil.isGooglePlayServicesAvailable(this) != ConnectionResult.SERVICE_MISSING) {
+            apiClient = new GoogleApiClient.Builder(this, this, this)
+                    .enableAutoManage(this, this) //!!! збс тема
                     .addApi(LocationServices.API)
-                    .addConnectionCallbacks(this)
-                    .addOnConnectionFailedListener(this)
                     .build();
             apiClient.connect();
 
@@ -79,26 +84,23 @@ public class MainActivity extends AppCompatActivity implements
         super.onResume();
         mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(5000);
-        mLocationRequest.setFastestInterval(2500);
+        mLocationRequest.setFastestInterval(3000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        apiClient.connect();
         //   handleNewLocation(myLocation);
     }
 
     @Override
     protected void onPause() {
-        super.onPause();
         if (apiClient.isConnected()) {
-            LocationServices.FusedLocationApi.removeLocationUpdates(
-                    apiClient, this);
-            apiClient.disconnect();
+            LocationServices.FusedLocationApi.removeLocationUpdates(apiClient, this);
         }
+        super.onPause();
     }
 
     public LatLng handleNewLocation(Location myLocation) {
         try {
             myLatLng = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
-       //     Toast.makeText(this, "" + myLatLng.toString(), Toast.LENGTH_SHORT).show();
+            //     Toast.makeText(this, "" + myLatLng.toString(), Toast.LENGTH_SHORT).show();
 
         } catch (NullPointerException e) {
             Toast.makeText(this, "Null" + myLatLng.toString(), Toast.LENGTH_SHORT).show();
@@ -107,14 +109,15 @@ public class MainActivity extends AppCompatActivity implements
 
     }
 
+    public TabsPagerFragmentAdapter getAdapter() {
+        return adapter;
+    }
 
     private void initTabs() {
-
-
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
 
-        TabsPagerFragmentAdapter adapter = new TabsPagerFragmentAdapter(getSupportFragmentManager());
+        adapter = new TabsPagerFragmentAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
     }
@@ -153,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements
                         makeAlert("SORRY", "It will be working soon");
                         break;
                     case R.id.nav_about:
-                        makeAlert("Find&Mark", "Developer : Alexander Goryn");
+                        makeAlert("Find&Mark", "Developer : Alexander Goryn \n e-mail : goryn.alexander@gmail.com");
                         break;
                     case R.id.nav_share:
                         makeAlert("SORRY", "It will be working soon");
@@ -200,11 +203,21 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onConnected(Bundle bundle) { // gps connect
-        myLocation = LocationServices.FusedLocationApi.getLastLocation(apiClient);
-        if (myLocation != null) {
-            handleNewLocation(myLocation);
-        }
-        LocationServices.FusedLocationApi.requestLocationUpdates(apiClient, mLocationRequest, this);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            myLocation = LocationServices.FusedLocationApi.getLastLocation(apiClient);
+            if (myLocation != null) {
+                handleNewLocation(myLocation);
+            }
+            LocationServices.FusedLocationApi.requestLocationUpdates(apiClient, mLocationRequest, this);
+        } else
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, RC_LOCATION_PERM);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == RC_LOCATION_PERM) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) onConnected(null);
+        } /*else blablabla, мне тоже иногда лень))*/
     }
 
     @Override
@@ -215,8 +228,8 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onLocationChanged(Location location) {
         handleNewLocation(myLocation); // updating new location when it changed
-     //   Toast.makeText(this, myLatLng.toString(), Toast.LENGTH_SHORT).show();
-         savePref(myLocation.getLatitude(), myLocation.getLongitude());
+        //   Toast.makeText(this, myLatLng.toString(), Toast.LENGTH_SHORT).show();
+        savePref(myLocation.getLatitude(), myLocation.getLongitude());
     }
 
     @Override

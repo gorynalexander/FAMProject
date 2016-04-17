@@ -20,6 +20,20 @@ public class TabsPagerFragmentAdapter extends FragmentStatePagerAdapter{
         tabs.add(ExistSightsFragment.getInstance(null));
         tabs.add(CompletedSightsFragment.getInstance(null));
     }
+    
+    public CompletedSightsFragment getCompletedItemsFragment(){
+        for (AbstractTabFragment tab : tabs) {
+            if (tab instanceof CompletedSightsFragment) return (CompletedSightsFragment) tab;
+        }
+        return null;
+    }
+    
+    public ExistSightsFragment getExistItemsFragment(){
+        for (AbstractTabFragment tab : tabs) {
+            if (tab instanceof ExistSightsFragment) return (ExistSightsFragment) tab;
+        }
+        return null;
+    }
 
     @Override
     public Fragment getItem(int position) {

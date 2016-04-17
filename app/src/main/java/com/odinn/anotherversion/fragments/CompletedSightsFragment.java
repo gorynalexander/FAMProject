@@ -9,15 +9,20 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
+import com.odinn.anotherversion.MainActivity;
+import com.odinn.anotherversion.OnSightMovedListener;
 import com.odinn.anotherversion.R;
 import com.odinn.anotherversion.adapter.SightListAdapter;
+import com.odinn.anotherversion.adapter.TabsPagerFragmentAdapter;
 import com.odinn.anotherversion.models.Sights;
 
 import java.util.ArrayList;
 import java.util.List;
 
 //
-public class CompletedSightsFragment extends AbstractTabFragment {
+public class CompletedSightsFragment extends AbstractTabFragment implements OnSightMovedListener {
+
+    private RecyclerView rvSightsList;
 
     public static CompletedSightsFragment getInstance(@Nullable Bundle args) {
         if (args == null) {
@@ -36,9 +41,16 @@ public class CompletedSightsFragment extends AbstractTabFragment {
         //this.setTitle(getActivity().getString(R.string.tab_items_passed));
         view = inflater.inflate(R.layout.fragment_exist, container, false);
 
-        RecyclerView rv = (RecyclerView) view.findViewById(R.id.rvSightsList);
-        rv.setLayoutManager(new LinearLayoutManager(getActivity()));
-        rv.setAdapter(new SightListAdapter(createMockSightListData()));
+        rvSightsList = (RecyclerView) view.findViewById(R.id.rvSightsList);
+        rvSightsList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        SightListAdapter adapter = new SightListAdapter(createMockSightListData());
+        try{
+            MainActivity activity = (MainActivity) getActivity();
+            adapter.setListener(activity.getAdapter().getExistItemsFragment());
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        rvSightsList.setAdapter(adapter);
 
         return view;
     }
@@ -49,5 +61,10 @@ public class CompletedSightsFragment extends AbstractTabFragment {
 
         data.add(new Sights(2, "Krijanovka", R.drawable.krijanovka, 2, 2));
         return data;
+    }
+
+    @Override
+    public void onSightMoved(Sights sights) {
+        ((SightListAdapter) rvSightsList.getAdapter()).add(sights);
     }
 }
