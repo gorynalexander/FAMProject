@@ -63,7 +63,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
                     style="@style/buttonStyle"
-                    android:text="Share" />
+                    android:text="@string/btn_share" />
 
             </LinearLayout>
         </LinearLayout>

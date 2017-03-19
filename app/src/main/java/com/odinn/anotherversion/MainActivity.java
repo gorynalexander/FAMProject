@@ -2,6 +2,7 @@ package com.odinn.anotherversion;
 
 import android.Manifest;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -11,7 +12,6 @@ import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -28,13 +28,23 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
+import com.odinn.anotherversion.adapter.SightListAdapter;
 import com.odinn.anotherversion.adapter.TabsPagerFragmentAdapter;
+import com.odinn.anotherversion.helper.Constants;
+import com.twitter.sdk.android.Twitter;
+import com.twitter.sdk.android.core.TwitterAuthConfig;
+import io.fabric.sdk.android.Fabric;
 
 
 public class MainActivity extends AppCompatActivity implements
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         com.google.android.gms.location.LocationListener {
+
+    // Note: Your consumer key and secret should be obfuscated in your source code before shipping.
+    private static final String TWITTER_KEY = "GoxzL2XXIsGgdU2WMzlkG7U0O";
+    private static final String TWITTER_SECRET = "v4ovPo3sDpkDITDP6b7K38pohx38S4HBl2CP19hTJs8evd4lyJ";
+
 
     private static final int LAYOUT = R.layout.activity_main;
 
@@ -53,25 +63,28 @@ public class MainActivity extends AppCompatActivity implements
     private LocationRequest mLocationRequest;
     private GoogleApiClient apiClient;
     private LatLng myLatLng;
-    private TabsPagerFragmentAdapter adapter;
+    private TabsPagerFragmentAdapter tpAdapter;
+    private SightListAdapter slAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppDefault);
         super.onCreate(savedInstanceState);
+        TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
+        Fabric.with(this, new Twitter(authConfig));
         setContentView(LAYOUT);
 
         initToolbar();
         initNavigationView();
         initTabs();
-
         googleApiConnect();
     }
 
     private void googleApiConnect() {
         if (GooglePlayServicesUtil.isGooglePlayServicesAvailable(this) != ConnectionResult.SERVICE_MISSING) {
             apiClient = new GoogleApiClient.Builder(this, this, this)
-                    .enableAutoManage(this, this) //!!! збс тема
+                    .enableAutoManage(this, this)
                     .addApi(LocationServices.API)
                     .build();
             apiClient.connect();
@@ -86,7 +99,6 @@ public class MainActivity extends AppCompatActivity implements
         mLocationRequest.setInterval(5000);
         mLocationRequest.setFastestInterval(3000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        //   handleNewLocation(myLocation);
     }
 
     @Override
@@ -109,16 +121,16 @@ public class MainActivity extends AppCompatActivity implements
 
     }
 
-    public TabsPagerFragmentAdapter getAdapter() {
-        return adapter;
+    public TabsPagerFragmentAdapter getTpAdapter() {
+        return tpAdapter;
     }
 
     private void initTabs() {
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
 
-        adapter = new TabsPagerFragmentAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(adapter);
+        tpAdapter = new TabsPagerFragmentAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(tpAdapter);
         tabLayout.setupWithViewPager(viewPager);
     }
 
@@ -144,7 +156,9 @@ public class MainActivity extends AppCompatActivity implements
                         showNotificationTab();
                         break;
                     case R.id.nav_add_new:
-                        makeAlert("SORRY", "It will be working soon");
+                        makeAlert("Test", "Let's try!");
+                        Intent intent = new Intent(MainActivity.this, AddNewActivity.class);
+                        startActivity(intent);
                         break;
                     case R.id.nav_achieve:
                         makeAlert("SORRY", "It will be working soon");
@@ -193,7 +207,6 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     public void savePref(double lat, double lng) {
-        //SightListAdapter sla = new SightListAdapter(null);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         sharedPreferences.edit()
                 .putString(Constants.PREF_LATITUDE, "" + lat)
@@ -217,7 +230,7 @@ public class MainActivity extends AppCompatActivity implements
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (requestCode == RC_LOCATION_PERM) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) onConnected(null);
-        } /*else blablabla, мне тоже иногда лень))*/
+        }
     }
 
     @Override
@@ -228,7 +241,6 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onLocationChanged(Location location) {
         handleNewLocation(myLocation); // updating new location when it changed
-        //   Toast.makeText(this, myLatLng.toString(), Toast.LENGTH_SHORT).show();
         savePref(myLocation.getLatitude(), myLocation.getLongitude());
     }
 

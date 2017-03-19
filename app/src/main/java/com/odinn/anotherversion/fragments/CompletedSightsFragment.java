@@ -10,11 +10,10 @@ import android.view.ViewGroup;
 
 
 import com.odinn.anotherversion.MainActivity;
-import com.odinn.anotherversion.OnSightMovedListener;
+import com.odinn.anotherversion.helper.OnSightMovedListener;
 import com.odinn.anotherversion.R;
 import com.odinn.anotherversion.adapter.SightListAdapter;
-import com.odinn.anotherversion.adapter.TabsPagerFragmentAdapter;
-import com.odinn.anotherversion.models.Sights;
+import com.odinn.anotherversion.models.Sight;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +45,7 @@ public class CompletedSightsFragment extends AbstractTabFragment implements OnSi
         SightListAdapter adapter = new SightListAdapter(createMockSightListData());
         try{
             MainActivity activity = (MainActivity) getActivity();
-            adapter.setListener(activity.getAdapter().getExistItemsFragment());
+            adapter.setListener(activity.getTpAdapter().getExistItemsFragment());
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -55,16 +54,16 @@ public class CompletedSightsFragment extends AbstractTabFragment implements OnSi
         return view;
     }
 
-    private List<Sights> createMockSightListData() {
-        List<Sights> data = new ArrayList<>();
-        // data.add(new Sights(0, "Item 1", R.drawable.opera, 46.581422, 30.808210));
+    private List<Sight> createMockSightListData() {
+        List<Sight> data = new ArrayList<>();
+        // data.add(new Sight(0, "Item 1", R.drawable.opera, 46.581422, 30.808210));
 
-        data.add(new Sights(2, "Krijanovka", R.drawable.krijanovka, 2, 2));
+
         return data;
     }
 
     @Override
-    public void onSightMoved(Sights sights) {
-        ((SightListAdapter) rvSightsList.getAdapter()).add(sights);
+    public void onSightMoved(Sight sight) {
+        ((SightListAdapter) rvSightsList.getAdapter()).add(sight);
     }
 }

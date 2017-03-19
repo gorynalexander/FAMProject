@@ -8,6 +8,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorControlNormal">@color/white</item>
+        <item name="colorButtonNormal">@color/white</item>
     </style>
 
     <style name="Button">
@@ -18,8 +19,8 @@
         <item name="android:layout_margin">3dp</item>
 
     </style>
-
     <style name="buttonStyle" parent = "Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@color/white</item>
 
 
     </style>

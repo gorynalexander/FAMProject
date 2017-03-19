@@ -3,7 +3,7 @@
     <item
         android:id="@+id/nav_sights"
         android:orderInCategory="1"
-        android:title="@string/sights"
+        android:title="@string/sight"
         android:icon="@drawable/ic_insert_photo_black_18dp"/>
 
     <item

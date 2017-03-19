@@ -19,12 +19,10 @@ public class FullScreenActivity extends AppCompatActivity{
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         ImageView iv = (ImageView) findViewById(R.id.imageViewFull);
-        //TextView tv = (TextView) findViewById(R.id.textView12);
-        //tv.setText("KEK");
         initToolbar();
 
         Intent intent = getIntent();
-        int id = intent.getIntExtra("id", R.drawable.fontan);
+        int id = intent.getIntExtra("id", R.drawable.errorimg);
         iv.setImageResource(id);
 
 

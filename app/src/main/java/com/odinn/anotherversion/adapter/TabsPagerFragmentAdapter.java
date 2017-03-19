@@ -6,8 +6,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.odinn.anotherversion.fragments.AbstractTabFragment;
+import com.odinn.anotherversion.fragments.ArchitectureTabFragment;
 import com.odinn.anotherversion.fragments.CompletedSightsFragment;
 import com.odinn.anotherversion.fragments.ExistSightsFragment;
+import com.odinn.anotherversion.fragments.HistoricalTabFragment;
+import com.odinn.anotherversion.fragments.LandscapesTabFragment;
 
 import java.util.ArrayList;
 
@@ -18,7 +21,9 @@ public class TabsPagerFragmentAdapter extends FragmentStatePagerAdapter{
     public TabsPagerFragmentAdapter(FragmentManager fm ) {
         super(fm);
         tabs.add(ExistSightsFragment.getInstance(null));
-        tabs.add(CompletedSightsFragment.getInstance(null));
+        tabs.add(LandscapesTabFragment.getInstance(null));
+        tabs.add(ArchitectureTabFragment.getInstance(null));
+        tabs.add(HistoricalTabFragment.getInstance(null));
     }
     
     public CompletedSightsFragment getCompletedItemsFragment(){
