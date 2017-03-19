@@ -4,6 +4,11 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+    <uses-feature android:name="android.hardware.camera" />
 
 
     <application
@@ -22,6 +27,16 @@
 
         </activity>
 
+        <activity android:name=".FullScreenActivity"
+                  android:label="FullScreen">
+        </activity>
+        <activity android:name=".AddNewActivity"
+            android:label="AddNew">
+        </activity>
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="f9a840834c00602ba30825b83478970b04a8c145" />
     </application>
 
 </manifest>

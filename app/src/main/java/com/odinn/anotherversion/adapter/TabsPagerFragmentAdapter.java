@@ -1,30 +1,43 @@
 package com.odinn.anotherversion.adapter;
 
 
-import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.odinn.anotherversion.R;
 import com.odinn.anotherversion.fragments.AbstractTabFragment;
-import com.odinn.anotherversion.fragments.CompletedSights;
-import com.odinn.anotherversion.fragments.ExistSights;
+import com.odinn.anotherversion.fragments.ArchitectureTabFragment;
+import com.odinn.anotherversion.fragments.CompletedSightsFragment;
+import com.odinn.anotherversion.fragments.ExistSightsFragment;
+import com.odinn.anotherversion.fragments.HistoricalTabFragment;
+import com.odinn.anotherversion.fragments.LandscapesTabFragment;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
 
-public class TabsPagerFragmentAdapter extends FragmentPagerAdapter{
+public class TabsPagerFragmentAdapter extends FragmentStatePagerAdapter{
 
-    private Map<Integer, AbstractTabFragment> tabs;
-    private Context context;
+    private ArrayList<AbstractTabFragment> tabs = new ArrayList<>();
 
-    public TabsPagerFragmentAdapter(Context context, FragmentManager fm ) {
+    public TabsPagerFragmentAdapter(FragmentManager fm ) {
         super(fm);
-        this.context = context;
-        tabs = new HashMap<>();
-        tabs.put(0, ExistSights.getInstance(context));
-        tabs.put(1, CompletedSights.getInstance(context));
+        tabs.add(ExistSightsFragment.getInstance(null));
+        tabs.add(LandscapesTabFragment.getInstance(null));
+        tabs.add(ArchitectureTabFragment.getInstance(null));
+        tabs.add(HistoricalTabFragment.getInstance(null));
+    }
+    
+    public CompletedSightsFragment getCompletedItemsFragment(){
+        for (AbstractTabFragment tab : tabs) {
+            if (tab instanceof CompletedSightsFragment) return (CompletedSightsFragment) tab;
+        }
+        return null;
+    }
+    
+    public ExistSightsFragment getExistItemsFragment(){
+        for (AbstractTabFragment tab : tabs) {
+            if (tab instanceof ExistSightsFragment) return (ExistSightsFragment) tab;
+        }
+        return null;
     }
 
     @Override
@@ -34,7 +47,6 @@ public class TabsPagerFragmentAdapter extends FragmentPagerAdapter{
 
     @Override
     public CharSequence getPageTitle(int position) {
-
         return tabs.get(position).getTitle();
     }
 

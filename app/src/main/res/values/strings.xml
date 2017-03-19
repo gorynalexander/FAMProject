@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Find and Mark Beta</string>
-    <string name="sights">Sights </string>
+    <string name="sight">Sights </string>
     <string name="add_new">Add new sight </string>
     <string name="achieve">Achievements </string>
     <string name="sett">Settings </string>
@@ -12,5 +12,13 @@
     <string name="tab_items_exist">Exist Sights</string>
     <string name="tab_items_passed">Passed Places</string>
     <string name="check_btn">Check!</string>
+    <string name="btn_share">Share!</string>
+    <string name="all_sights">All</string>
+    <string name="history">History</string>
+    <string name="landscapes">Пейзажи</string>
+    <string name="archit">Architecture</string>
+    <string name="add_new_sight">Add new sight</string>
+    <string name="make_photo">Make photo</string>
+
 
 </resources>
